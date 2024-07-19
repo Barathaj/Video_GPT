@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Result</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <!-- Google Fonts  -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link href="//vjs.zencdn.net/4.5/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+    <style>
+        body {
+            background-color: #025bee;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            margin: 3.12em auto;
+            padding: 3.12em 1.25em;
+            border-radius: 0.43em;
+            box-shadow: 0 1.25em 2.18em rgb(1, 28, 71, 0.3);
+            text-align: center;
+        }
+        #player {
+            display: block;
+            z-index: 150;
+            margin: 0 auto;
+        }
+        .video-container {
+            margin: 20px 0;
+        }
+        .form-container {
+            margin: 20px 0;
+        }
+        .form-container label {
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 10px 0 5px;
+        }
+        .form-container input[type="text"] {
+            width: 90%;
+            padding: 15px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #025bee;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-container button:hover {
+            background-color: #024ac8;
+        }
+        .download-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #025bee;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .download-button:hover {
+            background-color: #024ac8;
+        }
+        .result-text {
+            margin-top: 20px;
+        }
+        .result-text h3 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .result-text p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Processing Result</h1>
+        <div class="video-container">
+            <video id="player" controls autoplay preload="auto" width="768" height="432">
+                <source id="videoSource" src="{{ video_path }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="download-container">
+            <a href="{{ url_for('download_file', filename=video_path) }}" class="download-button" download>Download Video</a>
+        </div>
+        <div class="form-container">
+            <form action="{{ url_for('process_text') }}" method="post">
+                <label for="textbox1">Steps</label>
+                <input type="text" id="textbox1" name="textbox1" placeholder="Enter steps" required>
+                <label for="textbox2">Chat to changes</label>
+                <input type="text" id="textbox2" name="textbox2" placeholder="Enter chat to changes" required>
+                <input type="hidden" name="result_text" value="{{ result_text }}">
+                <input type="hidden" name="video_path" value="{{ video_path }}">
+                <input type="hidden" name="file_paths" value="{{ file_paths }}">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="result-text">
+            <h3>Generated Text:</h3>
+            <p>{{ result_text }}</p>
+        </div>
+    </div>
+
+    <script src="//vjs.zencdn.net/4.5/video.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+</body>
+</html>
