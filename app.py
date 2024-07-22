@@ -160,6 +160,7 @@ def clean(text):
             cleaned_page = page.replace('\n', ' ').strip()
             modified_string = re.sub(r'[0-9]+', '', cleaned_page).strip()
             clean_page=modified_string.replace('**','')
+            clean_page=clean_page.replace('##','')
             clean=clean_page.replace(':','').strip()
             cleaned_pages.append(clean) 
 
